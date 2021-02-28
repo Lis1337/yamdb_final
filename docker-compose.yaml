@@ -1,22 +1,36 @@
-# версия docker-compose
 version: '3.7'
 
 volumes:
   postgres_data:
+  static_volume:
 
 services:
+
   db:
     image: postgres:12.4
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
       - ./.env
+
   web:
-    build: .
+    image: lis1337/yamdb_final:latest
     restart: always
-    ports:
-      - "8000:8000"
+    command: sh -c "python manage.py migrate && gunicorn api_yamdb.wsgi:application --bind 0.0.0.0:8000"
+    volumes:
+      - static_volume:/code/static
+    expose:
+      - 8000
     depends_on:
       - db
     env_file:
       - ./.env
+
+  nginx:
+    build: ./nginx
+    volumes:
+      - static_volume:/code/static
+    ports:
+      - 8080:80
+    depends_on:
+      - web
