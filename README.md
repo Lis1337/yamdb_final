@@ -50,4 +50,4 @@ docker-compose down
 docker stop $(docker ps -a -q)
 docker rm $(docker ps -a -q)
 ```
-![yamdb_final workflow](https://github.com/lis1337/yamdb_final/workflows/yamdb_final%20workflow/badge.svg)
+[![yamdb_final workflow](https://github.com/Lis1337/yamdb_final/actions/workflows/yamdb_main.yml/badge.svg)](https://github.com/Lis1337/yamdb_final/actions/workflows/yamdb_main.yml)
